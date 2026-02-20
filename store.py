@@ -1,6 +1,7 @@
 from products import Product
 
 class Store:
+
     def __init__(self, products):
         """
         Initialize the store with a list of products.

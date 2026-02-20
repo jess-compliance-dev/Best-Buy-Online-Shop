@@ -1,4 +1,5 @@
 class Product:
+
     def __init__(self, name, price, quantity, active=True):
         """
         Initialize class Product und include error handling and add name,

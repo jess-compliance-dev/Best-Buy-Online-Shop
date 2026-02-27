@@ -1,6 +1,7 @@
 class Product:
+    """Setup class Product"""
 
-    def __init__(self, name, price, quantity, active=True):
+    def __init__(self, name, price, quantity):
         """
         Initialize class Product und include error handling and add name,
         price and quantity as variable instances
@@ -16,7 +17,7 @@ class Product:
         self.name = name
         self.price = price
         self.quantity = quantity
-        self.active = active
+        self.active = True
 
         if self.quantity == 0:
             self.active = False

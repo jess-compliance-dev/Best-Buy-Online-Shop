@@ -1,11 +1,10 @@
 from products import Product
 
 class Store:
+    """Setup Store class"""
 
     def __init__(self, products):
-        """
-        Initialize the store with a list of products.
-        """
+        """Initialize the store with a list of products."""
         self.products = products  # store all products
 
     def add_product(self, product):

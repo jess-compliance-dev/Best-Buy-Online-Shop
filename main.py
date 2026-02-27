@@ -7,6 +7,7 @@ GREEN = "\033[32m"
 BLUE = "\033[34m"
 RESET = "\033[0m"
 
+
 def start(store):
     """Show menu to user"""
     while True:
@@ -37,39 +38,48 @@ def start(store):
 
             # Show products with numbers
             for index, p in enumerate(active_products):
-                print(f"{index + 1}. {p.name} - Price: {p.price}, Quantity: {p.get_quantity()}")
+                print(
+                    f"{index + 1}. {p.name} - Price: {p.price}, Quantity: {p.get_quantity()}"
+                )
 
             while True:
-                prod_choice = input(f"{BLUE}Which product # do you want? (empty to finish): {RESET}")
+                prod_choice = input(
+                    f"{BLUE}Which product # do you want? (empty to finish): {RESET}"
+                )
+
                 if prod_choice.strip() == "":
                     break
-                if not prod_choice.isdigit() or int(prod_choice) < 1 or int(prod_choice) > len(active_products):
+
+                if (
+                    not prod_choice.isdigit()
+                    or int(prod_choice) < 1
+                    or int(prod_choice) > len(active_products)
+                ):
                     print(f"{RED}Invalid choice. Try again.{RESET}")
                     continue
 
                 quantity = input(f"{BLUE}What amount do you want? {RESET}")
+
                 if not quantity.isdigit() or int(quantity) < 1:
                     print(f"{RED}Invalid quantity. Try again.{RESET}")
                     continue
 
                 prod_index = int(prod_choice) - 1
-                order_list.append((active_products[prod_index], int(quantity)))
+                order_list.append(
+                    (active_products[prod_index], int(quantity))
+                )
                 print(f"{GREEN}Product added to list!{RESET}")
 
             # Place the order
             if order_list:
-                total_price = 0
-                for product, qty in order_list:
-                    try:
-                        total_price += product.buy(qty)
-                    except Exception as e:
-                        # Check if out of stock
-                        if "out of stock" in str(e).lower():
-                            print(f"{RED}Error while placing order: {product.name} is out of stock!{RESET}")
-                        else:
-                            print(f"{RED}Error while placing order: {e}{RESET}")
-                if total_price > 0:
+                try:
+                    total_price = store.order(order_list)
                     print(f"{GREEN}Order made! Total payment: {total_price} €{RESET}")
+                except Exception as e:
+                    if "out of stock" in str(e).lower():
+                        print(f"{RED}Error while placing order: A product is out of stock!{RESET}")
+                    else:
+                        print(f"{RED}Error while placing order: {e}{RESET}")
 
         elif choice == "4":
             # Quit
